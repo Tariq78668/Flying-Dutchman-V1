@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Database Base Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="css/menu.css" />
+  </head>
+
+  <body>
+    <div class="jumbotron">
+      <h1>Bar Tender Online Order System</h1>
+    </div>
+    <div class="topnav" id="myTopnav">
+      <a href="#home" class="active">Single Order</a>
+      <a href="#news">Group Order</a>
+      <a href="#contact">Change Order</a>
+      <a href="#contact" id="showOrder">Show Order</a>
+      <a href="#about"></a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+
+    <div class="main-container">
+      <div class="food-category">
+        <div class="food-category-options">
+          <h2>Categories</h2>
+          <button class="remove-item" id="refreshCategory">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+
+        <div class="categories" id="categories"></div>
+      </div>
+      <div class="fooditems">
+        <div class="container" id="fooditems"></div>
+      </div>
+      <div class="orderlist">
+        <h2>Cart</h2>
+        <div class="order-items" id="orderItems"></div>
+        <div
+          style="text-align: center; display: none; margin-top: 15px"
+          id="checkoutBtn"
+        >
+          <button class="checkout-order" id="checkoutConfirm">Checkout</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="checkoutModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="order_conform_form">
+          <h3>Order Conformation</h3>
+          <div class="order-form">
+            <div class="form-group">
+              <input type="radio" name="ordertype" value="1" />Single Order
+              <input type="radio" name="ordertype" value="2" />Group Order
+            </div>
+            <div class="form-group" id="groupInput" style="display: none">
+              <input
+                type="number"
+                placeholder="Enter number of people in group!"
+                class="form-control"
+                id="numberOfPeopleInGroup"
+              />
+            </div>
+            <div class="form-group">
+              <button class="checkout-order" id="btnOrderConfirm">
+                Procced to Payment
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="payment_conform_form" style="display: none">
+          <h3>Payment Conformation</h3>
+          <div class="order-form">
+            <div class="form-group">
+              <p>Total: <strong id="showTotalBill"></strong></p>
+              <button class="checkout-order" id="btnPaymentConfirm">
+                Confirm Payment
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="orderShowModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Order Type</th>
+              <th>Number of people</th>
+              <th>User Id</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody" style="text-align: center"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="scripts/script.js"></script>
+    <script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="scripts/Beverages.js"></script>
+    <script type="text/javascript" src="scripts/DBLoaded.js"></script>
+    <script type="text/javascript" src="scripts/loader.js"></script>
+    <script>
+      var beveragesGlobal = [];
+      $(document).ready(function () {
+        const types = beverageTypes();
+        types.forEach((item) => {
+          $("#categories").append(
+            "<div class='category-items' data-name=" +
+              item +
+              "><p>" +
+              item +
+              "</p></div>"
+          );
+        });
+
+        const beverages = allBeverages();
+        beveragesGlobal = beverages;
+        beverages.forEach((item) => {
+          $("#fooditems").append(
+            "<div class='card' data-category=" +
+              item[3] +
+              "><h3>" +
+              item[2] +
+              "</h3><p class='price'>$" +
+              item[4] +
+              "</p><p><button class='addtoCart' data-category=" +
+              item[3] +
+              " data-name=" +
+              item[2] +
+              " data-price=" +
+              item[4] +
+              " data-nrId=" +
+              item[0] +
+              ">Add to Cart</button></p></div>"
+          );
+        });
+
+        $(".category-items").click(function () {
+          const categoryName = $(this).data("name");
+          $("#fooditems").children().addClass("hideFoodItem");
+          var items = $("#fooditems").find(
+            "[data-category='" + categoryName + "']"
+          );
+          $(items).removeClass("hideFoodItem");
+        });
+
+        $("#refreshCategory").click(function () {
+          $("#fooditems").children().removeClass("hideFoodItem");
+        });
+
+        $(".addtoCart").click(function () {
+          const nrId = $(this).data("nrid");
+          const category = $(this).data("category");
+          const price = $(this).data("price");
+          const name = $(this).data("name");
+          const qty = 1;
+          const isAdded = addToCart({ nrId, category, name, price, qty });
+          if (isAdded) {
+            $("#checkoutBtn").show();
+            $(this).addClass("hideAddToCartButton");
+            refreshCart(false);
+          }
+        });
+
+        $("#checkoutConfirm").click(function () {
+          $("#checkoutModal").show();
+        });
+
+        $("input[name$='ordertype']").click(function () {
+          if ($(this).val() === "2") {
+            $("#groupInput").show();
+          } else {
+            $("#groupInput").hide();
+          }
+        });
+
+        $("#btnOrderConfirm").click(function () {
+          $("#order_conform_form").hide();
+          $("#showTotalBill").html(getTotal());
+          $("#payment_conform_form").show();
+        });
+
+        $("#btnPaymentConfirm").click(function () {
+          const orderTypeValue = $("input[name$='ordertype']").val();
+          const orderType = orderTypeValue === "1" ? "Single" : "Group";
+          const numberOfPeopleInGroup = $("#numberOfPeopleInGroup").val();
+          createOrder(orderType, numberOfPeopleInGroup);
+          refreshCart(true);
+          $("#checkoutModal").hide();
+          $("#order_conform_form").show();
+          $("#payment_conform_form").hide();
+          console.log(orderList);
+        });
+
+        $("#showOrder").click(function (eve) {
+          eve.preventDefault();
+          const orders = getOrderList();
+          orders.forEach((item) => {
+            console.log(item);
+            $("#tableBody").append(
+              "<tr><td>" +
+                item.orderId +
+                "</td><td>Yes</td><td>" +
+                item.total +
+                "</td><td>" +
+                item.orderType +
+                "</td><td>" +
+                item.noOfpeople +
+                "</td><td>" +
+                item.userId +
+                "</td></tr>"
+            );
+          });
+          $("#orderShowModal").show();
+        });
+
+        function refreshCart(isOrder) {
+          const cartItems = getCurrentCart();
+          $("#orderItems").html("");
+          if (isOrder) {
+            $(".addtoCart").removeClass("hideAddToCartButton");
+          }
+          if (cartItems.length) {
+            cartItems.forEach((item, index) => {
+              const indexIncr = index + 1;
+              $("#orderItems").append(
+                "<div class='order-item'><p class='item-number'>" +
+                  indexIncr +
+                  "</p><p class='item-name'>" +
+                  item.name +
+                  "</p><p class='item-price'>$" +
+                  item.price +
+                  "</p> <p class='item-quantity'><input min='1' class='quantity' type='number' value=" +
+                  item.qty +
+                  " /></p><button class='item-remove remove-item' data-nrId=" +
+                  item.nrId +
+                  "><i class='fa fa-remove'></i></button></div>"
+              );
+              $(".quantity").change(function () {
+                const nrId = $(this).parent().next().data("nrid");
+                const value = $(this).val();
+                updateQuantity(nrId, parseInt(value));
+              });
+              $(".item-remove").click(function () {
+                const itemToRemove = $(this).data("nrid");
+                $("#fooditems").find();
+                $("#fooditems")
+                  .find("[data-nrId='" + itemToRemove + "']")
+                  .removeClass("hideAddToCartButton");
+                removeItemFromCart(itemToRemove);
+                refreshCart(false);
+              });
+            });
+          } else {
+            $("#checkoutBtn").hide();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
