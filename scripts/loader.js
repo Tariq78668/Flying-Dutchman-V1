@@ -183,7 +183,8 @@ function getOrderList() {
 function getCurrentCart() {
   return currentCart;
 }
-
+// =====================================================================================================
+// Removing the item from the cart 
 function removeItemFromCart(nrId) {
   $.each(currentCart, function (i) {
     if (currentCart[i].nrId === nrId) {
@@ -192,7 +193,10 @@ function removeItemFromCart(nrId) {
     }
   });
 }
+// =====================================================================================================
 
+// =====================================================================================================
+// Adding the item to the cart
 function addToCart(item) {
   if (currentCart.length > 9) {
     alert("Cart can have only 10 elements!");
@@ -207,7 +211,10 @@ function addToCart(item) {
   }
   return true;
 }
+// =====================================================================================================
 
+// =====================================================================================================
+// If the quantity is change in the cart then we update the quantity by calling this function
 function updateQuantity(nrId, updatedQty) {
   $.each(currentCart, function (i) {
     if (currentCart[i].nrId === nrId) {
@@ -217,7 +224,10 @@ function updateQuantity(nrId, updatedQty) {
     }
   });
 }
+// =====================================================================================================
 
+// =====================================================================================================
+// Getting the total of the order here and returning
 function getTotal() {
   let sum = 0;
   currentCart.forEach((item) => {
@@ -225,7 +235,11 @@ function getTotal() {
   });
   return sum;
 }
+// =====================================================================================================
 
+// =====================================================================================================
+// When bartender or waiter click on the checkout button then this function is called. This function create
+// the order and proceed to next step
 function createOrder(type, numberOfPeople) {
   const lengthOfOrder = orderList.length;
   orderList.push({
@@ -238,6 +252,8 @@ function createOrder(type, numberOfPeople) {
   });
   currentCart = [];
 }
+// =====================================================================================================
+
 
 // =====================================================================================================
 // =====================================================================================================
