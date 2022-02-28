@@ -307,3 +307,42 @@ table {
   margin-bottom: 1rem;
   background-color: transparent;
 }
+.login-btn{
+  float: right;
+  color: white;
+  margin-right: 2%;
+  margin-top: 10px;
+  font-size: 20px;
+}
+.login_form{
+  display: none;
+  position: absolute;
+  background-color: white;
+  width: 40%;
+  height: auto;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 10%;
+  border: 2px solid grey;
+  border-radius: 10px;
+  padding-left: 30px;
+}
+.login_close{
+  float: right;
+}
+.username{
+  float: right;
+  color: white;
+  margin-right: 2%;
+  margin-top: 2%;
+  font-size: 20px;
+}
+.log_out{
+  float: right;
+  color: white;
+  margin-right: 2%;
+  margin-top: 2%;
+  font-size: 20px;
+}
