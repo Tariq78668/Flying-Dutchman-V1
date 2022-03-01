@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e14f50f-bfaa-4d7a-8158-19ff6d6780cb" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/BeerDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/BeerDB.js" afterDir="false" />
+    <list default="true" id="8e14f50f-bfaa-4d7a-8158-19ff6d6780cb" name="Default" comment="showing quantity">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Manager.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/DBStock.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/Manager.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/small_Beer_db.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +32,11 @@
     </replaceStrings>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -137,8 +145,21 @@
       <workItem from="1518614210614" duration="10543000" />
       <workItem from="1580984845200" duration="500000" />
       <workItem from="1646065144285" duration="14847000" />
-      <workItem from="1646114983634" duration="6356000" />
+      <workItem from="1646114983634" duration="6655000" />
     </task>
+    <task id="LOCAL−00001" summary="showing quantity">
+      <created>1646121953791</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1646121953791</updated>
+    </task>
+    <task id="LOCAL−00002" summary="showing quantity">
+      <created>1646122046537</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1646122046537</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -168,6 +189,21 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="showing quantity" />
+    <option name="LAST_COMMIT_MESSAGE" value="showing quantity" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/jquery-3.3.1.min.js">
