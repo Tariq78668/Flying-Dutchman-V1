@@ -13,6 +13,16 @@ var DB = {
         {
             "user_id": "28",
             "credentials": "3",
+            "password": "test",
+            "username": "test",
+            "first_name": "Sulayman",
+            "last_name": "Street",
+            "email": "sulayman.street@it.uu.se",
+            "phone": "0701517627"
+        },
+        {
+            "user_id": "28",
+            "credentials": "3",
             "password": "b612f428e4a53386fdb98f6c2164c16c",
             "username": "sulstr",
             "first_name": "Sulayman",
@@ -670,6 +680,30 @@ var DB = {
             "email": "giacinta.mikkelsen@it.uu.se",
             "phone": "0703913087"
         }
+    ],
+    "manager":[
+        {
+            "user_id": "2",
+            "credentials": "0",
+            "password": "test_m",
+            "username": "test_m",
+            "first_name": "Jory",
+            "last_name": "Assies",
+            "email": "jory.assies@it.uu.se",
+            "phone": "0704811411"
+        }
+    ],
+    "bartenders":[
+        {
+            "user_id": "2",
+            "credentials": "0",
+            "password": "test_bar",
+            "username": "test_bar",
+            "first_name": "Jory",
+            "last_name": "Assies",
+            "email": "jory.assies@it.uu.se",
+            "phone": "0704811411"
+        },
     ],
     "bought":
         [{
