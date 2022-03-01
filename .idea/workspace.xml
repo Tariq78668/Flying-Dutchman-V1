@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e14f50f-bfaa-4d7a-8158-19ff6d6780cb" name="Default" comment="Manager showing quantity">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="8e14f50f-bfaa-4d7a-8158-19ff6d6780cb" name="Default" comment="Manager showing quantity" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -141,7 +139,7 @@
       <workItem from="1518614210614" duration="10543000" />
       <workItem from="1580984845200" duration="500000" />
       <workItem from="1646065144285" duration="14847000" />
-      <workItem from="1646114983634" duration="7053000" />
+      <workItem from="1646114983634" duration="7619000" />
     </task>
     <task id="LOCAL−00001" summary="showing quantity">
       <created>1646121953791</created>
@@ -161,7 +159,13 @@
       <option name="presentableId" value="LOCAL−00003" />
       <updated>1646122294186</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL−00004" summary="Manager showing quantity">
+      <created>1646125039404</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1646125039404</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
