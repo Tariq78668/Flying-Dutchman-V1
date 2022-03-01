@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e14f50f-bfaa-4d7a-8158-19ff6d6780cb" name="Default" comment="showing quantity">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Manager.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/DBStock.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/Manager.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/small_Beer_db.json" afterDir="false" />
+    <list default="true" id="8e14f50f-bfaa-4d7a-8158-19ff6d6780cb" name="Default" comment="Manager showing quantity">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +141,7 @@
       <workItem from="1518614210614" duration="10543000" />
       <workItem from="1580984845200" duration="500000" />
       <workItem from="1646065144285" duration="14847000" />
-      <workItem from="1646114983634" duration="6655000" />
+      <workItem from="1646114983634" duration="7053000" />
     </task>
     <task id="LOCAL−00001" summary="showing quantity">
       <created>1646121953791</created>
@@ -159,7 +155,13 @@
       <option name="presentableId" value="LOCAL−00002" />
       <updated>1646122046537</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL−00003" summary="Manager showing quantity">
+      <created>1646122294186</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1646122294186</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -195,7 +197,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -203,7 +217,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="showing quantity" />
-    <option name="LAST_COMMIT_MESSAGE" value="showing quantity" />
+    <MESSAGE value="Manager showing quantity" />
+    <option name="LAST_COMMIT_MESSAGE" value="Manager showing quantity" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/jquery-3.3.1.min.js">
