@@ -316,7 +316,7 @@ table {
 }
 .login_form{
   display: none;
-  position: absolute;
+  position: fixed;
   background-color: white;
   width: 40%;
   height: auto;
@@ -331,6 +331,8 @@ table {
 }
 .login_close{
   float: right;
+  /* display: inline; */
+  padding-right: 3%;
 }
 .username{
   float: right;

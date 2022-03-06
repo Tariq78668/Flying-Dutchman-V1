@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Database Base Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -19,9 +20,9 @@
     <div class="log_out" id="log_out">Log out</div>
     <!-- login form starts here -->
     <div class="login_form" id="login_form">
-      <h2>Please Login</h2>
+      <div><h2 style="display: inline-block;">Please Login</h2><span class="login_close" id="login_close">Close X</span></div>
+      
       <div id="login_err" class="login_err"></div>
-      <div class="login_close" id="login_close">Close X</div>
       <form name="login" action="javascript: void(0);">
         <input type="username" name="username" placeholder="Enter Username">
         <input type="password" name="password" placeholder="Enter Password">

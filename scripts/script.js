@@ -1,3 +1,16 @@
+// close login modal if clicked outside area of the modal
+$(document).mouseup(function(e) 
+{
+    var container = $("#login_form");
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.hide();
+    }
+});
+ 
+// check if user is already login by checking the session storage 
+
 $(document).ready(function(){
   if(sessionStorage.getItem("username") !== null){
     $('#login_btn').hide();
