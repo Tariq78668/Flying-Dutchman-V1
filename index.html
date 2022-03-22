@@ -3,40 +3,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Database Base Document</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Flying Dutchman</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="stylesheet" href="css/menu.css" />
-    <script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="scripts/DBLoaded.js"></script>
   </head>
 
   <body>
-    <div class="login-btn" id="login_btn">Login</div>
-    <div class="username" id="username"></div>
-    <div class="log_out" id="log_out">Log out</div>
-    <!-- login form starts here -->
-    <div class="login_form" id="login_form">
-      <div><h2 style="display: inline-block;">Please Login</h2><span class="login_close" id="login_close">Close X</span></div>
-      
-      <div id="login_err" class="login_err"></div>
-      <form name="login" action="javascript: void(0);">
-        <input type="username" name="username" placeholder="Enter Username">
-        <input type="password" name="password" placeholder="Enter Password">
-        <input type="submit" name="login" value="login" onclick="user_login(login)">
-      </form>
-    </div>
-    <!-- login form ends here -->
     <div class="jumbotron">
-      <h1>Flying Dutchman </h1>
+      <a class="lannguage-link" href="index.html?ln=urdu">Urdu</a>
+      <a class="lannguage-link" href="index.html?ln=english">English</a>
+      <h1 id="title">The Flying Dutchman</h1>
+      <button class="remove-item" id="logout">
+        <i id="logout" class="fa fa-sign-out"></i> Logout
+      </button>
     </div>
-    <a href="index.html?ln=urdu"></a>
     <div class="topnav" id="myTopnav">
      
-      <a href="#contact" id="showOrder">Show Order</a>
+      <!-- <a href="#contact" id="showOrder">Show Order</a> -->
       <a href="#about"></a>
       <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
@@ -46,7 +32,7 @@
     <div class="main-container">
       <div class="food-category">
         <div class="food-category-options">
-          <h2>Categories</h2>
+          <h2 id="cate_Name">Categories</h2>
           <button class="remove-item" id="refreshCategory">
             <i class="fa fa-refresh"></i>
           </button>
@@ -57,8 +43,18 @@
       <div class="fooditems">
         <div class="container" id="fooditems"></div>
       </div>
-      <div class="orderlist">
-        <h2>Cart</h2>
+      <div class="orderlist" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <div style="display: flex; align-items: center">
+          <h2 id="cart" style="width: 70%">Cart</h2>
+          <div style="width: 30%">
+            <button id="btnUndo" class="disabled" disabled>
+              <i style="font-size: 20px" class="fa fa-undo"></i>
+            </button>
+            <button id="btnRedo" class="disabled" disabled>
+              <i style="font-size: 20px" class="fa fa-repeat"></i>
+            </button>
+          </div>
+        </div>
         <div class="order-items" id="orderItems"></div>
         <div
           style="text-align: center; display: none; margin-top: 15px"
@@ -71,7 +67,7 @@
 
     <div id="checkoutModal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close" id="checkoutModalClose">&times;</span>
         <div id="order_conform_form">
           <h3>Order Conformation</h3>
           <div class="order-form">
@@ -109,7 +105,7 @@
     </div>
     <div id="orderShowModal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close" id="orderShowModalClose">&times;</span>
         <table>
           <thead>
             <tr>
@@ -127,11 +123,85 @@
     </div>
 
     <script type="text/javascript" src="scripts/script.js"></script>
+    <script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="scripts/Beverages.js"></script>
+    <script type="text/javascript" src="scripts/DBLoaded.js"></script>
     <script type="text/javascript" src="scripts/loader.js"></script>
     <script>
+      var st = 0;
       var beveragesGlobal = [];
+
+      function refreshCart(isOrder) {
+        const cartItems = getCurrentCart();
+        $("#orderItems").html("");
+        if (isOrder) {
+          $(".addtoCart").removeClass("hideAddToCartButton");
+        }
+        if (cartItems.length) {
+          cartItems.forEach((item, index) => {
+            const indexIncr = index + 1;
+            $("#orderItems").append(
+              "<div class='order-item'><p class='item-number'>" +
+                indexIncr +
+                "</p><p class='item-name'>" +
+                item.name +
+                "</p><p class='item-price'>$" +
+                item.price +
+                "</p> <p class='item-quantity'><input min='1' class='quantity' type='number' value=" +
+                item.qty +
+                " /></p><button class='item-remove remove-item' data-nrId=" +
+                item.nrId +
+                "><i class='fa fa-remove'></i></button></div>"
+            );
+            $(".quantity").change(function () {
+              const nrId = $(this).parent().next().data("nrid");
+              const value = $(this).val();
+              updateQuantity(nrId, parseInt(value));
+            });
+            $(".item-remove").click(function () {
+              const itemToRemove = $(this).data("nrid");
+              $("#fooditems").find();
+              $("#fooditems")
+                .find("[data-nrId='" + itemToRemove + "']")
+                .removeClass("hideAddToCartButton");
+              removeItemFromCart(itemToRemove);
+              refreshCart(false);
+            });
+          });
+        } else {
+          $("#checkoutBtn").hide();
+        }
+      }
+      function allowDrop(ev) {
+        ev.preventDefault();
+      }
+
+      function drag(ev) {
+        // ev.dataTransfer.setData("text", ev.target.parentElement.id);
+      }
+
+      function test(sd) {
+        var gg = document.getElementById(sd);
+        const nrId = gg.dataset.nrid;
+        const category = gg.dataset.category;
+        const price = gg.dataset.price;
+        const name = gg.dataset.name;
+        const qty = 1;
+        const isAdded = addToCart({ nrId, category, name, price, qty });
+        if (isAdded) {
+          $("#checkoutBtn").show();
+          gg.classList.add("hideAddToCartButton");
+          refreshCart(false);
+        }
+      }
+
+      function drop(ev) {}
       $(document).ready(function () {
+        var loginDetails = localStorage.getItem("loggedin");
+        if (!loginDetails) {
+          window.location.href = "login.html";
+        }
+
         const types = beverageTypes();
         types.forEach((item) => {
           $("#categories").append(
@@ -146,14 +216,19 @@
         const beverages = allBeverages();
         beveragesGlobal = beverages;
         beverages.forEach((item) => {
+          st = st + 1;
           $("#fooditems").append(
-            "<div class='card' data-category=" +
+            "<div draggable='true' ondragend='test(" +
+              st +
+              ")' class='card' data-category=" +
               item[3] +
               "><h3>" +
               item[2] +
               "</h3><p class='price'>$" +
               item[4] +
-              "</p><p><button class='addtoCart' data-category=" +
+              "</p><p><button  id='" +
+              st +
+              "'  class='addtoCart' data-category=" +
               item[3] +
               " data-name=" +
               item[2] +
@@ -193,6 +268,8 @@
         });
 
         $("#checkoutConfirm").click(function () {
+          $("#payment_conform_form").hide();
+          $("#order_conform_form").show();
           $("#checkoutModal").show();
         });
 
@@ -219,7 +296,6 @@
           $("#checkoutModal").hide();
           $("#order_conform_form").show();
           $("#payment_conform_form").hide();
-          console.log(orderList);
         });
 
         $("#showOrder").click(function (eve) {
@@ -244,47 +320,81 @@
           $("#orderShowModal").show();
         });
 
-        function refreshCart(isOrder) {
-          const cartItems = getCurrentCart();
-          $("#orderItems").html("");
-          if (isOrder) {
-            $(".addtoCart").removeClass("hideAddToCartButton");
-          }
-          if (cartItems.length) {
-            cartItems.forEach((item, index) => {
-              const indexIncr = index + 1;
-              $("#orderItems").append(
-                "<div class='order-item'><p class='item-number'>" +
-                  indexIncr +
-                  "</p><p class='item-name'>" +
-                  item.name +
-                  "</p><p class='item-price'>$" +
-                  item.price +
-                  "</p> <p class='item-quantity'><input min='1' class='quantity' type='number' value=" +
-                  item.qty +
-                  " /></p><button class='item-remove remove-item' data-nrId=" +
-                  item.nrId +
-                  "><i class='fa fa-remove'></i></button></div>"
-              );
-              $(".quantity").change(function () {
-                const nrId = $(this).parent().next().data("nrid");
-                const value = $(this).val();
-                updateQuantity(nrId, parseInt(value));
-              });
-              $(".item-remove").click(function () {
-                const itemToRemove = $(this).data("nrid");
-                $("#fooditems").find();
-                $("#fooditems")
-                  .find("[data-nrId='" + itemToRemove + "']")
-                  .removeClass("hideAddToCartButton");
-                removeItemFromCart(itemToRemove);
-                refreshCart(false);
-              });
-            });
+        $("#logout").click(function () {
+          localStorage.removeItem("loggedin");
+          window.location.href = "login.html";
+        });
+
+        $(".close").click(function () {
+          $("#checkoutModal").hide();
+          $("#orderShowModal").hide();
+        });
+
+        function showAddToCartBtn(nrId, show) {
+          if (show) {
+            $("#fooditems")
+              .find("[data-nrId='" + nrId + "']")
+              .removeClass("hideAddToCartButton");
           } else {
-            $("#checkoutBtn").hide();
+            $("#fooditems")
+              .find("[data-nrId='" + nrId + "']")
+              .addClass("hideAddToCartButton");
           }
         }
+
+        $("#btnUndo").click(function () {
+          if (currentCart.length > 0) {
+            redoList.push(currentCart[currentCart.length - 1]);
+            showAddToCartBtn(currentCart[currentCart.length - 1].nrId, true);
+            currentCart.splice(currentCart.length - 1, 1);
+            refreshCart(false);
+            toggleRedoBtn(true);
+            if (currentCart.length < 1) {
+              toggleUndoBtn(false);
+            }
+          } else {
+            alert("No item in cart to undo!");
+          }
+        });
+        $("#btnRedo").click(function () {
+          if (redoList.length > 0) {
+            showAddToCartBtn(redoList[redoList.length - 1].nrId, false);
+            currentCart.push(redoList[redoList.length - 1]);
+            redoList.splice(redoList.length - 1, 1);
+            refreshCart(false);
+            toggleUndoBtn(true);
+            if (redoList.length < 1) {
+              toggleRedoBtn(false);
+            }
+          } else {
+            alert("This operation cannot happen!");
+          }
+        });
+
+        const queryString = window.location.search;
+
+        const urlParams = new URLSearchParams(queryString);
+
+        const page_type = urlParams.get('ln')
+
+        console.log(page_type);
+        if(page_type == "urdu"){
+          $("#title").html("اڑتا ہوا ڈچ مین");
+          $("#cate_Name").html("اقسام")
+          $("#logout").html("لاگ آوٹ")
+          $("#cart").html("ٹوکری ")
+          
+        }else if(page_type == "english"){
+          $("#title").html("The Flying Dutchman");
+          $("#cate_Name").html("Categories")
+          $("#logout").html("Log out")
+          $("#cart").html("Cart")
+         
+        } 
+        else{
+          $("#cate_Name").html("Categories")
+        }
+
       });
     </script>
   </body>

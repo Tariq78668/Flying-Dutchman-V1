@@ -62,6 +62,29 @@ function userDetails(userName) {
   return userCollect;
 }
 
+function loginUser(username, password) {
+  for (i = 0; i < DB.users.length; i++) {
+    if (
+      DB.users[i].username === username &&
+      DB.users[i].password === password
+    ) {
+      var result = {
+        id: DB.users[i].user_id,
+        username: DB.users[i].username,
+        firstName: DB.users[i].first_name,
+        lastName: DB.users[i].last_name,
+        email: DB.users[i].email,
+        creds: DB.users[i].credentials,
+      };
+
+      localStorage.setItem("loggedin", JSON.stringify(result));
+      return result;
+    }
+  }
+
+  return null;
+}
+
 // =====================================================================================================
 // This function will change the credit amount in the user's account. Note that the amount given as argument is the new
 // balance and not the changed amount (± balance).
@@ -176,6 +199,8 @@ function percentToNumber(percentStr) {
 var orderList = [];
 var currentCart = [];
 
+var redoList = [];
+
 function getOrderList() {
   return orderList;
 }
@@ -183,20 +208,41 @@ function getOrderList() {
 function getCurrentCart() {
   return currentCart;
 }
-// =====================================================================================================
-// Removing the item from the cart 
+
 function removeItemFromCart(nrId) {
   $.each(currentCart, function (i) {
-    if (currentCart[i].nrId === nrId) {
+    if (currentCart[i].nrId == nrId) {
+      redoList.push(currentCart[i]);
       currentCart.splice(i, 1);
       return false;
     }
   });
+  if (currentCart.length < 1) {
+    toggleUndoBtn(false);
+  }
+  toggleRedoBtn(true);
 }
-// =====================================================================================================
 
-// =====================================================================================================
-// Adding the item to the cart
+function toggleRedoBtn(enable) {
+  if (enable) {
+    $("#btnRedo").removeClass("disabled");
+    $("#btnRedo").attr("disabled", false);
+  } else {
+    $("#btnRedo").addClass("disabled");
+    $("#btnRedo").attr("disabled", true);
+  }
+}
+
+function toggleUndoBtn(enable) {
+  if (enable) {
+    $("#btnUndo").removeClass("disabled");
+    $("#btnUndo").attr("disabled", false);
+  } else {
+    $("#btnUndo").addClass("disabled");
+    $("#btnUndo").attr("disabled", true);
+  }
+}
+
 function addToCart(item) {
   if (currentCart.length > 9) {
     alert("Cart can have only 10 elements!");
@@ -209,37 +255,30 @@ function addToCart(item) {
     alert("This item is already added!");
     return false;
   }
+  toggleUndoBtn(true);
+
   return true;
 }
-// =====================================================================================================
 
-// =====================================================================================================
-// If the quantity is change in the cart then we update the quantity by calling this function
 function updateQuantity(nrId, updatedQty) {
   $.each(currentCart, function (i) {
-    if (currentCart[i].nrId === nrId) {
+    if (currentCart[i].nrId == nrId) {
       currentCart[i].qty = updatedQty;
-      currentCart[i].price = currentCart[i].price * updatedQty;
       return false;
     }
   });
-}
-// =====================================================================================================
 
-// =====================================================================================================
-// Getting the total of the order here and returning
+  console.log(currentCart);
+}
+
 function getTotal() {
   let sum = 0;
   currentCart.forEach((item) => {
-    sum += parseFloat(item.price);
+    sum += parseFloat(item.price * item.qty);
   });
   return sum;
 }
-// =====================================================================================================
 
-// =====================================================================================================
-// When bartender or waiter click on the checkout button then this function is called. This function create
-// the order and proceed to next step
 function createOrder(type, numberOfPeople) {
   const lengthOfOrder = orderList.length;
   orderList.push({
@@ -252,8 +291,6 @@ function createOrder(type, numberOfPeople) {
   });
   currentCart = [];
 }
-// =====================================================================================================
-
 
 // =====================================================================================================
 // =====================================================================================================

@@ -1,29 +1,59 @@
-<!DOCTYPE html>    
-<html>    
-<head>    
-    <title>Login Form</title>    
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-   
-</head> 
-  
-<body>    
-    <h2>The Flying Dutchman</h2><br>    
-    <div class="loginForm">    
-    <form id="loginForm" >    
-        <label><b>User Name     
-        </b>    
-        </label>    
-        <input type="text" name="Username" id="Username" placeholder="Username">    
-        <br><br>    
-        <label><b>Password     
-        </b>    
-        </label>    
-        <input type="Password" name="Password" id="Password" placeholder="Password">    
-        <br><br>    
-        <input type="button" name="login" id="login" value="Log In">       
-        <br><br>    
-       
-    </form>     
-</div>    
-</body>    
-</html>  
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Form</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+
+  <body>
+    <h2>The Flying Dutchman</h2>
+    <br />
+    <div class="loginForm">
+      <form id="loginForm">
+        <label><b>User Name </b> </label>
+        <input
+          type="text"
+          name="Username"
+          id="Username"
+          placeholder="Username"
+        />
+        <br /><br />
+        <label><b>Password </b> </label>
+        <input
+          type="Password"
+          name="Password"
+          id="Password"
+          placeholder="Password"
+        />
+        <br /><br />
+        <input type="submit" name="login" id="login" value="Log In" />
+        <br /><br />
+      </form>
+    </div>
+    <script type="text/javascript" src="scripts/script.js"></script>
+    <script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="scripts/Beverages.js"></script>
+    <script type="text/javascript" src="scripts/DBLoaded.js"></script>
+    <script type="text/javascript" src="scripts/loader.js"></script>
+    <script>
+      $(document).ready(function () {
+        var loginDetails = localStorage.getItem("loggedin");
+        if (loginDetails) {
+          window.location.href = "index.html";
+        }
+
+        $("#loginForm").submit(function (event) {
+          event.preventDefault();
+          var username = event.currentTarget[0].value;
+          var password = event.currentTarget[1].value;
+          var result = loginUser(username, password);
+          if (!result) {
+            alert("Login Failed!");
+          } else {
+            window.location.href = "index.html";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
