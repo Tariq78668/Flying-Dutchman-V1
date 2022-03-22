@@ -361,6 +361,7 @@
             showAddToCartBtn(redoList[redoList.length - 1].nrId, false);
             currentCart.push(redoList[redoList.length - 1]);
             redoList.splice(redoList.length - 1, 1);
+            $("#checkoutBtn").show();
             refreshCart(false);
             toggleUndoBtn(true);
             if (redoList.length < 1) {
